@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+IT+Moderna:wght@100..400&display=swap');
+
+#logo{
+    font-size: 25px;
+    font-weight: 600;
+    font-family: "Playwrite IT Moderna", cursive;
+}
+
+#navLinks{
+    color: black;
+    font-weight: 400;
+}
+
+#navbar-toggler{
+    border: none;
+}
+
+#offcanvasNavbar{
+    background-color: rgba(255, 255, 255, 0.755);
+    backdrop-filter: blur(10px);
+}
