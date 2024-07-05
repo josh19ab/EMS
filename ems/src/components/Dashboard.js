@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './Dashboard.css'
+import './Dashboard.css';
 
 function Dashboard() {
   const [employeeCount, setEmployeeCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch the number of employees from the backend
     const fetchEmployeeCount = async () => {
       try {
         const response = await fetch('/api/employees/count', {
@@ -16,8 +16,10 @@ function Dashboard() {
         });
         const data = await response.json();
         setEmployeeCount(data.count);
+        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching employee count:', error);
+        setIsLoading(false);
       }
     };
 
@@ -28,13 +30,19 @@ function Dashboard() {
     <div className="container my-5">
       <div className="row align-items-center">
         <div className="col-md-6">
-        <h1>Dashboard</h1>
+          <h1>Dashboard</h1>
           <div className="row g-2">
             <div className="col-md-6">
               <div className="card" id='card'>
                 <div className="card-body">
                   <h5 className="card-title">Number of Employees</h5>
-                  <p className="card-text">{employeeCount}</p>
+                  {isLoading ? (
+                    <div className="spinner-border text-primary" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  ) : (
+                    <p className="card-text">{employeeCount}</p>
+                  )}
                 </div>
               </div>
             </div>

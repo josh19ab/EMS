@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axiosInstance from './axiosInstance';
 import { useNavigate } from 'react-router-dom';
+import Loader from './Loader'; 
+
 
 const LoginSchema = Yup.object().shape({
   username: Yup.string().required('Required'),
@@ -12,10 +14,12 @@ const LoginSchema = Yup.object().shape({
 function Login() {
   const navigate = useNavigate();
   const apiUrl = '/api/auth/login';
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div className="row justify-content-center">
       <div className="col-md-6">
+        {isLoading && <Loader />}
         <div className="card">
           <div className="card-body">
             <h2 className="card-title">Login</h2>
@@ -27,6 +31,7 @@ function Login() {
               initialValues={{ username: '', password: '' }}
               validationSchema={LoginSchema}
               onSubmit={(values, { setSubmitting, setErrors }) => {
+                setIsLoading(true);
                 axiosInstance.post(apiUrl, values)
                   .then(response => {
                     localStorage.setItem('token', response.data.access_token);

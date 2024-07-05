@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './Navbar.css';
+import { CiPower } from "react-icons/ci";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -89,7 +90,7 @@ function Navbar() {
                 <Link className="nav-link" to="/employees/new">Add Employee</Link>
               </li>
               <li className="nav-item">
-                <button className="btn btn-link nav-link" onClick={handleLogout}>Logout</button>
+                <button className="btn btn-link nav-link" onClick={handleLogout}>Logout <CiPower /></button>
               </li>
             </ul>
           </div>
