@@ -18,7 +18,7 @@ function Login() {
         <div className="card">
           <div className="card-body">
             <h2 className="card-title">Login</h2>
-            <p className="card-text text-secondary">  Demo user<br/>
+            <p className="card-text text-secondary">  test user<br/>
               Username:   ' testuser  ' <br/> Password:    '  testpassword  '
             </p>
             
