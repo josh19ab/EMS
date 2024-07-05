@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 import { useNavigate } from 'react-router-dom';
 
 const LoginSchema = Yup.object().shape({
@@ -11,7 +11,7 @@ const LoginSchema = Yup.object().shape({
 
 function Login() {
   const navigate = useNavigate();
-  const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/api/auth/login`;
+  const apiUrl = '/api/auth/login';
 
   return (
     <div className="row justify-content-center">
@@ -27,7 +27,7 @@ function Login() {
               initialValues={{ username: '', password: '' }}
               validationSchema={LoginSchema}
               onSubmit={(values, { setSubmitting, setErrors }) => {
-                axios.post(apiUrl, values)
+                axiosInstance.post(apiUrl, values)
                   .then(response => {
                     localStorage.setItem('token', response.data.access_token);
                     navigate('/dashboard');
