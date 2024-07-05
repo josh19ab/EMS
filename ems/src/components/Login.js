@@ -11,6 +11,7 @@ const LoginSchema = Yup.object().shape({
 
 function Login() {
   const navigate = useNavigate();
+  const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/api/auth/login`;
 
   return (
     <div className="row justify-content-center">
@@ -26,14 +27,18 @@ function Login() {
               initialValues={{ username: '', password: '' }}
               validationSchema={LoginSchema}
               onSubmit={(values, { setSubmitting, setErrors }) => {
-                axios.post('/api/auth/login', values)
+                axios.post(apiUrl, values)
                   .then(response => {
                     localStorage.setItem('token', response.data.access_token);
                     navigate('/dashboard');
                   })
                   .catch(error => {
-                    console.log(error);
-                    setErrors({ server: 'Invalid credentials' });
+                    console.error('Login error:', error);
+                    if (error.response && error.response.data && error.response.data.message) {
+                      setErrors({ server: error.response.data.message });
+                    } else {
+                      setErrors({ server: 'An error occurred during login. Please try again later.' });
+                    }
                     setSubmitting(false);
                   });
               }}

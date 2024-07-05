@@ -8,10 +8,11 @@ function EmployeeDetail() {
   const navigate = useNavigate();
   const [employee, setEmployee] = useState(null);
   const [notification, setNotification] = useState({ message: '', type: '' });
+  const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/api/employees`;
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    axios.get(`/api/employees/${id}`, {
+    axios.get(`${apiUrl}/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
@@ -20,11 +21,11 @@ function EmployeeDetail() {
     .catch(error => {
       setNotification({ message: 'Error fetching employee data.', type: 'danger' });
     });
-  }, [id]);
+  }, [id, apiUrl]);
 
   const handleDelete = () => {
     const token = localStorage.getItem('token');
-    axios.delete(`/api/employees/${id}`, {
+    axios.delete(`${apiUrl}/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {

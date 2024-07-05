@@ -7,10 +7,12 @@ import './EmployeeList.css';
 
 function EmployeeList() {
   const [employees, setEmployees] = useState([]);
+  const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/api/employees`;
+
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    axios.get('/api/employees', {
+    axios.get(apiUrl, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
@@ -19,11 +21,11 @@ function EmployeeList() {
     .catch(error => {
       console.error('There was an error!', error);
     });
-  }, []);
+  }, [apiUrl]);
 
   const handleDelete = (employeeId) => {
     const token = localStorage.getItem('token');
-    axios.delete(`/api/employees/${employeeId}`, {
+    axios.delete(`${apiUrl}/${employeeId}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {

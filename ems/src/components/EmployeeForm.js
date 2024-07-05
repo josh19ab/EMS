@@ -22,11 +22,13 @@ function EmployeeForm() {
     salary: ''
   });
   const [notification, setNotification] = useState({ message: '', type: '' });
+  const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/api/employees`;
+
 
   useEffect(() => {
     if (id) {
       const token = localStorage.getItem('token');
-      axios.get(`/api/employees/${id}`, {
+      axios.get(`${apiUrl}/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(response => {
@@ -36,7 +38,7 @@ function EmployeeForm() {
         setNotification({ message: 'Error fetching employee data.', type: 'danger' });
       });
     }
-  }, [id]);
+  }, [id,apiUrl]);
 
   return (
     <div className="row justify-content-center">
@@ -55,7 +57,7 @@ function EmployeeForm() {
               validationSchema={EmployeeSchema}
               onSubmit={(values, { setSubmitting, setErrors }) => {
                 const token = localStorage.getItem('token');
-                const url = id ? `/api/employees/${id}` : '/api/employees';
+                const url = id ? `${apiUrl}/${id}` : `${apiUrl}`;
                 const method = id ? 'put' : 'post';
 
                 axios[method](url, values, {
